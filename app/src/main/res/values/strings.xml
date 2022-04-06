@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Ex1</string>
+    <string name="contact_name">Andi Lightricksovitch</string>
+    <string name="email">android.devices@lightricks.com</string>
+    <string name="phone_number">+972 525 111 111</string>
+    <string name="contact_image_description">A Beautiful Redhead Model Looking Straight Into The Camera OMG</string>
 </resources>
