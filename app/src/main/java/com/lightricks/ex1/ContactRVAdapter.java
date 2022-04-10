@@ -39,17 +39,14 @@ public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.View
         holder.contactTV.setText(contact.getName());
 
         // on below line we are adding on click listener to our item of recycler view.
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // on below line we are opening a new activity and passing data to it.
-                Intent i = new Intent(context, ContactActivity.class);
-                i.putExtra("name", contact.getName());
-                i.putExtra("email", contact.getEmail());
-                i.putExtra("number", contact.getNumber());
-                // on below line we are starting a new activity,
-                context.startActivity(i);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            // on below line we are opening a new activity and passing data to it.
+            Intent i = new Intent(context, ContactDetailsActivity.class);
+            i.putExtra("name", contact.getName());
+            i.putExtra("email", contact.getEmail());
+            i.putExtra("number", contact.getNumber());
+            // on below line we are starting a new activity,
+            context.startActivity(i);
         });
     }
 
