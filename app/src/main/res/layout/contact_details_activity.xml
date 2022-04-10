@@ -8,7 +8,7 @@
     tools:context=".ContactDetailsActivity">
 
     <ImageView
-        android:id="@+id/ImageIV"
+        android:id="@+id/ContactDetailsActivity_ImageIV"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/contact_image_description"
@@ -17,10 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/andi_lightricksovitch" />
+        app:srcCompat="@raw/andi_lightricksovitch" />
 
     <TextView
-        android:id="@+id/NumberTV"
+        android:id="@+id/ContactDetailsActivity_NumberTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -32,11 +32,11 @@
         android:textColor="#82D7F7"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/NameTV"
+        app:layout_constraintBottom_toTopOf="@id/ContactDetailsActivity_NameTV"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/NameTV"
+        android:id="@+id/ContactDetailsActivity_NameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
@@ -50,11 +50,11 @@
         android:textColor="#4196C0"
         android:textColorHighlight="#398377"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/EmailTV"
-        app:layout_constraintStart_toStartOf="@+id/NumberTV" />
+        app:layout_constraintBottom_toTopOf="@id/ContactDetailsActivity_EmailTV"
+        app:layout_constraintStart_toStartOf="@id/ContactDetailsActivity_NumberTV" />
 
     <TextView
-        android:id="@+id/EmailTV"
+        android:id="@+id/ContactDetailsActivity_EmailTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
@@ -67,6 +67,6 @@
         android:textColor="#FF4196C0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/NameTV" />
+        app:layout_constraintStart_toStartOf="@id/ContactDetailsActivity_NameTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

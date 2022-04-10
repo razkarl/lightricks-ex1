@@ -11,16 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.ViewHolder> {
-    // creating variables for context and array list.
     private Context context;
-    private ArrayList<Contact> contactArrayList;
+    private List<Contact> contactList;
 
-    public ContactRVAdapter(Context context, ArrayList<Contact> contactsModalArrayList) {
+    public ContactRVAdapter(Context context, List<Contact> contactList) {
         this.context = context;
-        this.contactArrayList = contactsModalArrayList;
+        this.contactList = contactList;
     }
 
     @NonNull
@@ -32,40 +31,37 @@ public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // getting data from array list in our contact details.
-        Contact contact = contactArrayList.get(position);
+        Contact contact = contactList.get(position);
 
-        // on below line we are setting data to our text view.
-        holder.contactTV.setText(contact.getName());
+        // Set view items content
+        holder.nameTV.setText(contact.getName());
+        holder.imageIV.setImageResource(contact.getImageId(context));
 
-        // on below line we are adding on click listener to our item of recycler view.
+        // Set view items behaviour
         holder.itemView.setOnClickListener(v -> {
-            // on below line we are opening a new activity and passing data to it.
             Intent i = new Intent(context, ContactDetailsActivity.class);
             i.putExtra("name", contact.getName());
             i.putExtra("email", contact.getEmail());
             i.putExtra("number", contact.getNumber());
-            // on below line we are starting a new activity,
+            i.putExtra("imageId", contact.getImageId(context));
             context.startActivity(i);
         });
     }
 
     @Override
     public int getItemCount() {
-        return contactArrayList.size();
+        return contactList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        // on below line creating a variable
-        // for our image view and text view.
-        private ImageView contactIV;
-        private final TextView contactTV;
+        private ImageView imageIV;
+        private final TextView nameTV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // initializing our image view and text view.
-            contactIV = itemView.findViewById(R.id.idIVContact);
-            contactTV = itemView.findViewById(R.id.idTVContactName);
+            imageIV = itemView.findViewById(R.id.ContactsRVItem_ImageIV);
+            nameTV = itemView.findViewById(R.id.ContactsRVItem_NameTV);
         }
     }
 }

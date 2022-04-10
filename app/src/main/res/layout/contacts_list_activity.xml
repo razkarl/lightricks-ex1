@@ -6,7 +6,7 @@
     tools:context=".ContactsListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ContactsRV"
+        android:id="@+id/ContactsListActivity_ContactsRV"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
