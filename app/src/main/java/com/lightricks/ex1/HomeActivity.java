@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private ArrayList<ContactDetails> contactDetailsArrayList;
+    private ArrayList<Contact> contactArrayList;
     private RecyclerView contactRV;
     private ContactRVAdapter contactRVAdapter;
 
@@ -21,17 +21,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
 
         // on below line we are initializing our variables.
-        contactDetailsArrayList = new ArrayList<>();
+        contactArrayList = new ArrayList<>();
 
-        ContactDetails andi = new ContactDetails("Andi Lightricksovitch",
+        Contact andi = new Contact("Andi Lightricksovitch",
                 "android.devices@lightricks.com",
                 "+972 525 111 111");
-        contactDetailsArrayList.add(andi);
+        contactArrayList.add(andi);
 
-        ContactDetails raz = new ContactDetails("Raz Karl",
+        Contact raz = new Contact("Raz Karl",
                 "rkarl@lightricks.com",
                 "+972 527 221 113");
-        contactDetailsArrayList.add(raz);
+        contactArrayList.add(raz);
 
         contactRV = findViewById(R.id.ContactsRV);
 
@@ -41,7 +41,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void prepareContactRV() {
         // in this method we are preparing our recycler view with adapter.
-        contactRVAdapter = new ContactRVAdapter(this, contactDetailsArrayList);
+        contactRVAdapter = new ContactRVAdapter(this, contactArrayList);
         // on below line we are setting layout manager.
         contactRV.setLayoutManager(new LinearLayoutManager(this));
         // on below line we are setting adapter to our recycler view.

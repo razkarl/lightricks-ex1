@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 
-public class ContactDetailsActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity {
     private String contactName, contactEmail, contactNumber;
     private TextView nameTV, emailTV, numberTV;
     private ImageView imageIV;

@@ -16,11 +16,11 @@ import java.util.ArrayList;
 public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.ViewHolder> {
     // creating variables for context and array list.
     private Context context;
-    private ArrayList<ContactDetails> contactDetailsArrayList;
+    private ArrayList<Contact> contactArrayList;
 
-    public ContactRVAdapter(Context context, ArrayList<ContactDetails> contactsModalArrayList) {
+    public ContactRVAdapter(Context context, ArrayList<Contact> contactsModalArrayList) {
         this.context = context;
-        this.contactDetailsArrayList = contactsModalArrayList;
+        this.contactArrayList = contactsModalArrayList;
     }
 
     @NonNull
@@ -33,20 +33,20 @@ public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // getting data from array list in our contact details.
-        ContactDetails contactDetails = contactDetailsArrayList.get(position);
+        Contact contact = contactArrayList.get(position);
 
         // on below line we are setting data to our text view.
-        holder.contactTV.setText(contactDetails.getName());
+        holder.contactTV.setText(contact.getName());
 
         // on below line we are adding on click listener to our item of recycler view.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // on below line we are opening a new activity and passing data to it.
-                Intent i = new Intent(context, ContactDetailsActivity.class);
-                i.putExtra("name", contactDetails.getName());
-                i.putExtra("email", contactDetails.getEmail());
-                i.putExtra("number", contactDetails.getNumber());
+                Intent i = new Intent(context, ContactActivity.class);
+                i.putExtra("name", contact.getName());
+                i.putExtra("email", contact.getEmail());
+                i.putExtra("number", contact.getNumber());
                 // on below line we are starting a new activity,
                 context.startActivity(i);
             }
@@ -55,14 +55,14 @@ public class ContactRVAdapter extends RecyclerView.Adapter<ContactRVAdapter.View
 
     @Override
     public int getItemCount() {
-        return contactDetailsArrayList.size();
+        return contactArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // on below line creating a variable
         // for our image view and text view.
         private ImageView contactIV;
-        private TextView contactTV;
+        private final TextView contactTV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
