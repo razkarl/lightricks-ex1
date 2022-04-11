@@ -29,14 +29,5 @@ public class Contact {
         return email;
     }
 
-    public int getImageId(Context context) {
-        String imageName = name.replace(' ', '_').toLowerCase(Locale.ROOT);
-        int imageId = context.getResources().getIdentifier(imageName, "raw", context.getPackageName());
-        if (0 == imageId) { // No such resource found
-            // RKARL TODO: Handle errors (what happens if the "default" image resource does not exist?)
-            // RKARL TODO: Cache the default image instead of fetching it every time
-            imageId = context.getResources().getIdentifier("default_image", "raw", context.getPackageName());
-        }
-        return imageId;
-    }
+    public String getImageName() { return name.replace(' ', '_').toLowerCase(Locale.ROOT); }
 }

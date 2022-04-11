@@ -1,5 +1,7 @@
 package com.lightricks.ex1;
 
+import static com.lightricks.ex1.Common.glideSetImage;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -22,16 +24,17 @@ public class ContactDetailsActivity extends AppCompatActivity {
 
     /**
      * Returns an intent to start the ContactDetailsActivity for the given contact.
+     *
      * @param intenderContext - Context from which the intent will be sent.
-     * @param contact - Contact for which to start a ContactDetailsActivity.
+     * @param contact         - Contact for which to start a ContactDetailsActivity.
      * @return - an Intent that starts this activity for the given contact.
      */
-    public static Intent getIntent(Context intenderContext, Contact contact){
+    public static Intent getIntent(Context intenderContext, Contact contact) {
         Intent intent = new Intent(intenderContext, ContactDetailsActivity.class);
         intent.putExtra("name", contact.getName());
         intent.putExtra("email", contact.getEmail());
         intent.putExtra("number", contact.getNumber());
-        intent.putExtra("imageId", contact.getImageId(intenderContext));
+        intent.putExtra("imageName", contact.getImageName());
         return intent;
     }
 
@@ -40,12 +43,12 @@ public class ContactDetailsActivity extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         String email = intent.getStringExtra("email");
         String number = intent.getStringExtra("number");
-        int imageId = intent.getIntExtra("imageId", -1); // RKARL TODO: When is defaultValue used?
+        String imageName = intent.getStringExtra("imageName");
 
         tvName.setText(name);
         tvEmail.setText(email);
         tvNumber.setText(number);
-        ivImage.setImageResource(imageId);  // RKARL TODO: Fetch matching image, or use a default 'No image found' image.
+        glideSetImage(this, ivImage, imageName);
     }
 
     private void bindViews() {

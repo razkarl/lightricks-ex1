@@ -1,5 +1,7 @@
 package com.lightricks.ex1;
 
+import static com.lightricks.ex1.Common.glideSetImage;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -56,7 +58,7 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
     private void setViewsFromContact(@NonNull ContactItemViewHolder holder, Contact contact) {
         // Display contact in PhonebookActivity
         holder.tvName.setText(contact.getName());
-        holder.ivImage.setImageResource(contact.getImageId(context));
+        glideSetImage(context, holder.ivImage, contact.getImageName());
     }
 
     public static class ContactItemViewHolder extends RecyclerView.ViewHolder {
