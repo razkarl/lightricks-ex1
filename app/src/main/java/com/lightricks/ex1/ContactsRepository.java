@@ -1,9 +1,15 @@
 package com.lightricks.ex1;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -20,7 +26,9 @@ public class ContactsRepository {
 
     private ContactsRepository() {}
 
-    public ArrayList<Contact> getContacts(Context context) { return getConactsFromPhone(context); }
+    public ArrayList<Contact> getContacts(Activity activity) {
+        return getConactsFromPhone(activity);
+    }
 
     private ArrayList<Contact> getContactsHardCoded() {
         // Initialize on first usage, then cache
@@ -45,36 +53,45 @@ public class ContactsRepository {
         return contactsHardCoded;
     }
 
-    private ArrayList<Contact> getConactsFromPhone(Context context){
+    private ArrayList<Contact> getConactsFromPhone(Activity activity) {
         ArrayList<Contact> contacts = new ArrayList<>();
 
-        // Initialize unique resource identifier
-        Uri contentUri = ContactsContract.Contacts.CONTENT_URI;
-        // Sort contacts by ascending order
-        String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
-        // Initialize cursor
-        Cursor cursor = context.getContentResolver().query(contentUri, null, null, null, sortOrder);
-        if (cursor.getCount() > 0){
-            // When count is greater than 0, use a while loop
-            while (cursor.moveToNext()){
-                // Get contact id
-                String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-                Uri uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-                String selection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
-                Cursor phoneCursor = context.getContentResolver().query(
-                        uriPhone, null, selection, new String[]{id}, null);
-                if (phoneCursor.moveToNext()){
-                    String number = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                            ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    String email = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                            ContactsContract.CommonDataKinds.Email.DATA));
-                    Contact contact = new Contact(name,email,number);
-                    contacts.add(contact);
-                    phoneCursor.close();
+        // Ask for phone contacts permissions
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.READ_CONTACTS}, 100);
+        }
+        // Get contacts from phone (with permissions)
+        else {
+            // Initialize unique resource identifier
+            Uri contentUri = ContactsContract.Contacts.CONTENT_URI;
+            // Sort contacts by ascending order
+            String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
+            // Initialize cursor
+            Cursor cursor = activity.getContentResolver().query(contentUri, null, null, null, sortOrder);
+            if (cursor.getCount() > 0) {
+                // When count is greater than 0, use a while loop
+                while (cursor.moveToNext()) {
+                    // Get contact id
+                    String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                    Uri uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                    String selection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
+                    Cursor phoneCursor = activity.getContentResolver().query(
+                            uriPhone, null, selection, new String[]{id}, null);
+                    if (phoneCursor.moveToNext()) {
+                        String number = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        String email = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
+                                ContactsContract.CommonDataKinds.Email.DATA));
+                        Contact contact = new Contact(name, email, number);
+                        contacts.add(contact);
+                        phoneCursor.close();
+                    }
                 }
+                cursor.close();
             }
-            cursor.close();
         }
         return contacts;
     }

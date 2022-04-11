@@ -16,8 +16,8 @@ public class ContactDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_details);
-        findActivityViews();
-        setActivityViewsFromIntent(getIntent());
+        bindViews();
+        setViewsFromIntent(getIntent());
     }
 
     /**
@@ -35,15 +35,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void findActivityViews() {
-        // RKARL TODO: Validate Ids were found, handle exceptions
-        tvName = findViewById(R.id.tvContactDetailsEmail);
-        tvEmail = findViewById(R.id.tvContactDetailsNumber);
-        tvNumber = findViewById(R.id.tvContactDetailsName);
-        ivImage = findViewById(R.id.ivContactDetailsImage);
-    }
-
-    private void setActivityViewsFromIntent(Intent intent) {
+    private void setViewsFromIntent(Intent intent) {
         // Extract contact details from intent parameters
         String name = intent.getStringExtra("name");
         String email = intent.getStringExtra("email");
@@ -54,5 +46,13 @@ public class ContactDetailsActivity extends AppCompatActivity {
         tvEmail.setText(email);
         tvNumber.setText(number);
         ivImage.setImageResource(imageId);  // RKARL TODO: Fetch matching image, or use a default 'No image found' image.
+    }
+
+    private void bindViews() {
+        // RKARL TODO: Validate Ids were found, handle exceptions
+        tvName = findViewById(R.id.tvContactDetailsEmail);
+        tvEmail = findViewById(R.id.tvContactDetailsNumber);
+        tvNumber = findViewById(R.id.tvContactDetailsName);
+        ivImage = findViewById(R.id.ivContactDetailsImage);
     }
 }

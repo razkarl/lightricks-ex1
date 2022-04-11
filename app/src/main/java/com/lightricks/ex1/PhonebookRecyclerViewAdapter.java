@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<PhonebookRecyclerViewAdapter.ViewHolder> {
+public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<PhonebookRecyclerViewAdapter.ContactItemViewHolder> {
     private final Context context;
     private final List<Contact> contacts;
 
+    // Constructor
     public PhonebookRecyclerViewAdapter(Context context, List<Contact> contacts) {
         this.context = context;
         this.contacts = contacts;
@@ -24,14 +25,14 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
 
     @NonNull
     @Override
-    public PhonebookRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.item_contact, parent, false);
-        return new ViewHolder(view);
+        return new ContactItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewsHolder, int position) {
+    public void onBindViewHolder(@NonNull ContactItemViewHolder viewsHolder, int position) {
         // Fetch the contact at the given position
         Contact contact = contacts.get(position);
 
@@ -52,25 +53,25 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
         context.startActivity(contactDetailsActivityIntent);
     }
 
-    private void setViewsFromContact(@NonNull ViewHolder holder, Contact contact) {
+    private void setViewsFromContact(@NonNull ContactItemViewHolder holder, Contact contact) {
         // Display contact in PhonebookActivity
         holder.tvName.setText(contact.getName());
         holder.ivImage.setImageResource(contact.getImageId(context));
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ContactItemViewHolder extends RecyclerView.ViewHolder {
         private TextView tvName;
         private ImageView ivImage;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ContactItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            findViews(itemView);
+            bindViews(itemView);
         }
 
-        private void findViews(@NonNull View itemView) {
-            // Fetch views from activity_phonebook.xml
-            tvName = itemView.findViewById(R.id.tvItemContactName);
-            ivImage = itemView.findViewById(R.id.ivItemContactImage);
+        private void bindViews(@NonNull View itemView) {
+            // Fetch views from item_contact.xml
+            tvName = itemView.findViewById(R.id.tvContactName);
+            ivImage = itemView.findViewById(R.id.ivContactImage);
         }
     }
 }
