@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ContactsRepository {
     private static ContactsRepository instance = null;
-    private ArrayList<Contact> contactsHardCoded = null;
+    private static ArrayList<Contact> contactsHardCoded = null;
 
     public static ContactsRepository getInstance() {
         if (instance == null) {
@@ -57,11 +57,10 @@ public class ContactsRepository {
         ArrayList<Contact> contacts = new ArrayList<>();
 
         // Ask for phone contacts permissions
-        if (ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.READ_CONTACTS}, 100);
+        if (!hasReadContactsPermission(activity)) {
+            requestReadContactsPermission(activity);
         }
+
         // Get contacts from phone (with permissions)
         else {
             // Initialize unique resource identifier
@@ -70,6 +69,7 @@ public class ContactsRepository {
             String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
             // Initialize cursor
             Cursor cursor = activity.getContentResolver().query(contentUri, null, null, null, sortOrder);
+
             if (cursor.getCount() > 0) {
                 // When count is greater than 0, use a while loop
                 while (cursor.moveToNext()) {
@@ -94,5 +94,15 @@ public class ContactsRepository {
             }
         }
         return contacts;
+    }
+
+    private void requestReadContactsPermission(Activity activity) {
+        ActivityCompat.requestPermissions(activity,
+                new String[]{Manifest.permission.READ_CONTACTS}, 100);
+    }
+
+    private boolean hasReadContactsPermission(Activity activity) {
+        return ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
     }
 }

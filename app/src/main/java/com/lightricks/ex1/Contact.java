@@ -5,9 +5,9 @@ import android.content.Context;
 import java.util.Locale;
 
 public class Contact {
-    private String name;
-    private String email;
-    private String number;
+    private final String name;
+    private final String email;
+    private final String number;
 
     public Contact(String name,
                    String email,
