@@ -53,9 +53,9 @@ public class ActivityContactDetails extends AppCompatActivity {
 
     private void bindViews() {
         // RKARL TODO: Validate Ids were found, handle exceptions
-        tvName = findViewById(R.id.tvContactDetailsEmail);
-        tvEmail = findViewById(R.id.tvContactDetailsNumber);
-        tvNumber = findViewById(R.id.tvContactDetailsName);
+        tvName = findViewById(R.id.tvContactDetailsName);
+        tvEmail = findViewById(R.id.tvContactDetailsEmail);
+        tvNumber = findViewById(R.id.tvContactDetailsNumber);
         ivImage = findViewById(R.id.ivContactDetailsImage);
     }
 }
