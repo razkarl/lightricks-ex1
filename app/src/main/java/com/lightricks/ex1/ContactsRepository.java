@@ -56,42 +56,32 @@ public class ContactsRepository {
     private ArrayList<Contact> getConactsFromPhone(Activity activity) {
         ArrayList<Contact> contacts = new ArrayList<>();
 
-        // Ask for phone contacts permissions
+        // Validate permissions to read contacts from phone
         if (!hasReadContactsPermission(activity)) {
+            // Ask for permissions, and return an empty contacts list
             requestReadContactsPermission(activity);
+            return contacts;
         }
 
-        // Get contacts from phone (with permissions)
-        else {
-            // Initialize unique resource identifier
-            Uri contentUri = ContactsContract.Contacts.CONTENT_URI;
-            // Sort contacts by ascending order
-            String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
-            // Initialize cursor
-            Cursor cursor = activity.getContentResolver().query(contentUri, null, null, null, sortOrder);
+        // Read contacts from phone (with permissions)
+        Cursor cursor = activity.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                null,
+                null,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC");
 
-            if (cursor.getCount() > 0) {
-                // When count is greater than 0, use a while loop
-                while (cursor.moveToNext()) {
-                    // Get contact id
-                    String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                    String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-                    Uri uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-                    String selection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
-                    Cursor phoneCursor = activity.getContentResolver().query(
-                            uriPhone, null, selection, new String[]{id}, null);
-                    if (phoneCursor.moveToNext()) {
-                        String number = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        String email = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                                ContactsContract.CommonDataKinds.Email.DATA));
-                        Contact contact = new Contact(name, email, number);
-                        contacts.add(contact);
-                        phoneCursor.close();
-                    }
-                }
-                cursor.close();
+        if ((cursor != null ? cursor.getCount() : 0) > 0) {
+            while (cursor.moveToNext()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                String number = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Email.DATA));
+                Contact contact = new Contact(name, email, number);
+                contacts.add(contact);
             }
+        }
+        if (cursor != null){
+            cursor.close();
         }
         return contacts;
     }
