@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/phonebookActivity">
+
+    <activity
+        android:id="@+id/phonebookActivity"
+        android:name="com.lightricks.ex1.ActivityPhonebook"
+        android:label="activity_phonebook"
+        tools:layout="@layout/activity_phonebook" />
+    <activity
+        android:id="@+id/contactDetailsActivity"
+        android:name="com.lightricks.ex1.ActivityContactDetails"
+        android:label="activity_contact_details"
+        tools:layout="@layout/activity_contact_details" />
+</navigation>
