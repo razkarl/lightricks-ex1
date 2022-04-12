@@ -9,9 +9,8 @@ import android.os.Bundle;
 import java.util.List;
 
 
-public class PhonebookActivity extends AppCompatActivity {
-    private RecyclerView phonebookRecyclerView;
-    private PhonebookRecyclerViewAdapter phonebookRecyclerViewAdapter;
+public class ActivityPhonebook extends AppCompatActivity {
+    private RecyclerView rvPhonebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +22,19 @@ public class PhonebookActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        // Refresh the contacts list upon resume (may have changed)
         List<Contact> contacts = ContactsRepository.getInstance().getContacts(this);
         setViewsFromContacts(contacts);
     }
 
     private void setViewsFromContacts(List<Contact> contacts) {
-        phonebookRecyclerViewAdapter = new PhonebookRecyclerViewAdapter(this, contacts);
-        phonebookRecyclerView.setAdapter(phonebookRecyclerViewAdapter);
-        phonebookRecyclerViewAdapter.notifyDataSetChanged();
+        RecyclerViewAdapterPhonebook rvAdapterPhonebook = new RecyclerViewAdapterPhonebook(this, contacts);
+        rvPhonebook.setAdapter(rvAdapterPhonebook);
+        rvAdapterPhonebook.notifyDataSetChanged();
     }
 
     private void bindViews() {
-        phonebookRecyclerView = findViewById(R.id.rvPhonebook);
-        phonebookRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        rvPhonebook = findViewById(R.id.rvPhonebook);
+        rvPhonebook.setLayoutManager(new LinearLayoutManager(this));
     }
 }

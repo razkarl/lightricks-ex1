@@ -10,7 +10,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ContactDetailsActivity extends AppCompatActivity {
+public class ActivityContactDetails extends AppCompatActivity {
     private TextView tvName, tvEmail, tvNumber;
     private ImageView ivImage;
 
@@ -30,7 +30,7 @@ public class ContactDetailsActivity extends AppCompatActivity {
      * @return - an Intent that starts this activity for the given contact.
      */
     public static Intent getIntent(Context intenderContext, Contact contact) {
-        Intent intent = new Intent(intenderContext, ContactDetailsActivity.class);
+        Intent intent = new Intent(intenderContext, ActivityContactDetails.class);
         intent.putExtra("name", contact.getName());
         intent.putExtra("email", contact.getEmail());
         intent.putExtra("number", contact.getNumber());

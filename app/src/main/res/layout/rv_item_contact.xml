@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlContact"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
     android:background="@drawable/gradient">
 
-
-    <!--image view for displaying the first letter of contact-->
     <ImageView
         android:id="@+id/ivContactImage"
         android:layout_width="60dp"
@@ -20,7 +17,6 @@
         android:padding="3dp"
         android:src="@mipmap/ic_launcher" />
 
-    <!--text view for displaying user name-->
     <TextView
         android:id="@+id/tvContactName"
         android:layout_width="match_parent"

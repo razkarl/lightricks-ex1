@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ex1">
         <activity
-            android:name=".PhonebookActivity"
+            android:name=".ActivityPhonebook"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ContactDetailsActivity"
+            android:name=".ActivityContactDetails"
             android:exported="false"/>
     </application>
 

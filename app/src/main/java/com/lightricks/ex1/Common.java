@@ -10,7 +10,7 @@ public class Common {
      * Sets the image given by imageName to the view given by ivImage.
      *
      * @param context   - Context from which to take resources.
-     * @param ivImage   - ImageView to set image to.
+     * @param ivImage   - ImageView to display the given image.
      * @param imageName - Name of the image file inside the res/raw directory.
      */
     public static void glideSetImage(Context context, ImageView ivImage, String imageName) {

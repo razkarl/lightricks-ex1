@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<PhonebookRecyclerViewAdapter.ContactItemViewHolder> {
+public class RecyclerViewAdapterPhonebook extends RecyclerView.Adapter<RecyclerViewAdapterPhonebook.ContactItemViewHolder> {
     private final Context context;
     private final List<Contact> contacts;
 
     // Constructor
-    public PhonebookRecyclerViewAdapter(Context context, List<Contact> contacts) {
+    public RecyclerViewAdapterPhonebook(Context context, List<Contact> contacts) {
         this.context = context;
         this.contacts = contacts;
     }
@@ -29,7 +29,7 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
     @Override
     public ContactItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_contact, parent, false);
+                .inflate(R.layout.rv_item_contact, parent, false);
         return new ContactItemViewHolder(view);
     }
 
@@ -42,7 +42,7 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
         setViewsFromContact(viewsHolder, contact);
 
         // When the contact item is clicked - start the contact's contactDetailsActivity
-        viewsHolder.itemView.setOnClickListener(v -> startContactDetailsActivity(contact));
+        viewsHolder.itemView.setOnClickListener(v -> startActivityContactDetails(contact));
     }
 
     @Override
@@ -50,9 +50,9 @@ public class PhonebookRecyclerViewAdapter extends RecyclerView.Adapter<Phonebook
         return contacts.size();
     }
 
-    private void startContactDetailsActivity(Contact contact) {
-        Intent contactDetailsActivityIntent = ContactDetailsActivity.getIntent(context, contact);
-        context.startActivity(contactDetailsActivityIntent);
+    private void startActivityContactDetails(Contact contact) {
+        Intent intentActivityContactDetails = ActivityContactDetails.getIntent(context, contact);
+        context.startActivity(intentActivityContactDetails);
     }
 
     private void setViewsFromContact(@NonNull ContactItemViewHolder holder, Contact contact) {
