@@ -12,16 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ex1">
         <activity
-            android:name=".ActivityPhonebook"
-            android:exported="true">
+            android:name=".MainActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ActivityContactDetails"
-            android:exported="false"/>
     </application>
 
 </manifest>

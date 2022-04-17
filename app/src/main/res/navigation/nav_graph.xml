@@ -3,16 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/phonebookActivity">
-
-    <activity
-        android:id="@+id/phonebookActivity"
-        android:name="com.lightricks.ex1.ActivityPhonebook"
-        android:label="activity_phonebook"
-        tools:layout="@layout/activity_phonebook" />
-    <activity
-        android:id="@+id/contactDetailsActivity"
-        android:name="com.lightricks.ex1.ActivityContactDetails"
-        android:label="activity_contact_details"
-        tools:layout="@layout/activity_contact_details" />
+    app:startDestination="@id/phonebookFragment">
+    <fragment
+        android:id="@+id/phonebookFragment"
+        android:name="com.lightricks.ex1.PhonebookFragment"
+        android:label="fragment_phonebook"
+        tools:layout="@layout/fragment_phonebook" >
+        <action
+            android:id="@+id/action_phonebookFragment_to_contactDetailsFragment"
+            app:destination="@id/contactDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactDetailsFragment"
+        android:name="com.lightricks.ex1.ContactDetailsFragment"
+        android:label="fragment_contact_details"
+        tools:layout="@layout/contact_details_fragment" >
+        <argument
+            android:name="contactPosition"
+            app:argType="integer" />
+    </fragment>
 </navigation>
