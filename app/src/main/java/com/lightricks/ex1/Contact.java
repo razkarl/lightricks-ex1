@@ -1,7 +1,12 @@
 package com.lightricks.ex1;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import org.w3c.dom.ls.LSSerializer;
+
+import java.io.Serializable;
 import java.util.Locale;
 
 public class Contact {
@@ -29,5 +34,12 @@ public class Contact {
         return email;
     }
 
-    public String getImageName() { return name.replace(' ', '_').toLowerCase(Locale.ROOT); }
+    /**
+     * Image name is induced from the contact name, as follows:
+     * name      = "Raz Karl"
+     * imageName = "raz_karl"
+     * Contact images are saved in src/main/res/raw/<contact_name>.<jpg|jpeg|png|...>
+     * @return the name of the image resource that corresponds to this contact.
+     */
+    protected String getImageName() { return name.replace(' ', '_').toLowerCase(Locale.ROOT); }
 }

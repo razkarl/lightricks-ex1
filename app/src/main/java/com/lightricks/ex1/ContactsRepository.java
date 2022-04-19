@@ -1,21 +1,16 @@
 package com.lightricks.ex1;
 
-import android.Manifest;
-import android.app.Activity;
+import static com.lightricks.ex1.Common.hasReadContactsPermission;
+
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.ContactsContract;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsRepository {
     private static ContactsRepository instance = null;
-    private static ArrayList<Contact> contactsHardCoded = null;
 
     public static ContactsRepository getInstance() {
         if (instance == null) {
@@ -26,83 +21,53 @@ public class ContactsRepository {
 
     private ContactsRepository() {}
 
-    public ArrayList<Contact> getContacts(Activity activity) {
-        return getConactsFromPhone(activity);
-    }
-
-    private ArrayList<Contact> getContactsHardCoded() {
-        // Initialize on first usage, then cache
-        if (contactsHardCoded == null) {
-            contactsHardCoded = new ArrayList<>();
-
-            Contact andi = new Contact("Andi Lightricksovitch",
-                    "android.devices@lightricks.com",
-                    "+972 525 111 111");
-            contactsHardCoded.add(andi);
-
-            Contact raz = new Contact("Raz Karl",
-                    "rkarl@lightricks.com",
-                    "+972 527 221 113");
-            contactsHardCoded.add(raz);
-
-            Contact omri = new Contact("Omri Hamelech",
-                    "gever@lightricks.com",
-                    "+972 501 234 567");
-            contactsHardCoded.add(omri);
-        }
-        return contactsHardCoded;
-    }
-
-    private ArrayList<Contact> getConactsFromPhone(Activity activity) {
+    public List<Contact> getPhoneContacts(Context context) {
         ArrayList<Contact> contacts = new ArrayList<>();
 
-        // Ask for phone contacts permissions
-        if (!hasReadContactsPermission(activity)) {
-            requestReadContactsPermission(activity);
+        // Validate permissions to read contacts from phone
+        if (!hasReadContactsPermission(context)) {
+            // Ask for permissions, and return an empty contacts list
+            // requestReadContactsPermission(activity);
+            return contacts;
         }
 
-        // Get contacts from phone (with permissions)
-        else {
-            // Initialize unique resource identifier
-            Uri contentUri = ContactsContract.Contacts.CONTENT_URI;
-            // Sort contacts by ascending order
-            String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC";
-            // Initialize cursor
-            Cursor cursor = activity.getContentResolver().query(contentUri, null, null, null, sortOrder);
+        // Read contacts from phone (with permissions)
+        Cursor contacts_cursor = context.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                null,
+                null,
+                ContactsContract.Contacts.DISPLAY_NAME + " ASC");
 
-            if (cursor.getCount() > 0) {
-                // When count is greater than 0, use a while loop
-                while (cursor.moveToNext()) {
-                    // Get contact id
-                    String id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                    String name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-                    Uri uriPhone = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-                    String selection = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " =?";
-                    Cursor phoneCursor = activity.getContentResolver().query(
-                            uriPhone, null, selection, new String[]{id}, null);
-                    if (phoneCursor.moveToNext()) {
-                        String number = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        String email = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(
-                                ContactsContract.CommonDataKinds.Email.DATA));
-                        Contact contact = new Contact(name, email, number);
-                        contacts.add(contact);
-                        phoneCursor.close();
-                    }
-                }
-                cursor.close();
+        if ((contacts_cursor != null ? contacts_cursor.getCount() : 0) > 0) {
+            while (contacts_cursor.moveToNext()) {
+                String contactId = contacts_cursor.getString(contacts_cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                String name = contacts_cursor.getString(contacts_cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                String number = contacts_cursor.getString(contacts_cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                String email = getContactEmail(context, contactId);
+
+                Contact contact = new Contact(name, email, number);
+                contacts.add(contact);
             }
+        }
+        if (contacts_cursor != null){
+            contacts_cursor.close();
         }
         return contacts;
     }
 
-    private void requestReadContactsPermission(Activity activity) {
-        ActivityCompat.requestPermissions(activity,
-                new String[]{Manifest.permission.READ_CONTACTS}, 100);
-    }
-
-    private boolean hasReadContactsPermission(Activity activity) {
-        return ContextCompat.checkSelfPermission(activity,
-                Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+    private String getContactEmail(Context context, String contactId) {
+        String email = "";
+        Cursor email_cursor = context.getContentResolver().query(
+                ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                new String[]{contactId},
+                null);
+        if (email_cursor != null && email_cursor.moveToFirst()) {
+            email = email_cursor.getString(email_cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Email.DATA));
+            email_cursor.close();
+        }
+        return email;
     }
 }

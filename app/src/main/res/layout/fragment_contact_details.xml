@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity">
+
+<ImageView
+    android:id="@+id/ivContactDetailsImage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scaleType="centerCrop"
+    android:contentDescription="@string/contact_image_description"
+    app:srcCompat="@raw/andi_lightricksovitch" />
+
+<TextView
+    android:id="@+id/tvContactDetailsName"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginBottom="10dp"
+    android:background="#4D8177"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp"
+    android:text="@string/contact_name"
+    android:textColor="#82D7F7"
+    android:textSize="30sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toTopOf="@id/tvContactDetailsEmail"
+    app:layout_constraintStart_toStartOf="parent" />
+
+<TextView
+    android:id="@+id/tvContactDetailsEmail"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="6dp"
+    android:layout_marginBottom="10dp"
+    android:background="#4D8177"
+    android:paddingStart="5dp"
+    android:paddingTop="3dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="3dp"
+    android:text="@string/email"
+    android:textColor="#4196C0"
+    android:textColorHighlight="#398377"
+    android:textStyle="italic"
+    app:layout_constraintBottom_toTopOf="@id/tvContactDetailsNumber"
+    app:layout_constraintStart_toStartOf="@id/tvContactDetailsName" />
+
+<TextView
+    android:id="@+id/tvContactDetailsNumber"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp"
+    android:background="#4D8177"
+    android:paddingStart="5dp"
+    android:paddingTop="3dp"
+    android:paddingEnd="5dp"
+    android:paddingBottom="3dp"
+    android:text="@string/phone_number"
+    android:textColor="#FF4196C0"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintStart_toStartOf="@id/tvContactDetailsEmail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
