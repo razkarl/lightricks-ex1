@@ -76,6 +76,6 @@ public class PhonebookAdapter extends RecyclerView.Adapter<PhonebookAdapter.Cont
     private void setContactItemViewHolderFromContact(@NonNull ContactItemViewsHolder holder, Contact contact) {
         // Display contact in PhonebookActivity
         holder.tvName.setText(contact.getName());
-        glideSetImage(context, holder.ivImage, contact.getImageName());
+        glideSetImage(context, holder.ivImage, contact.getImagePath());
     }
 }

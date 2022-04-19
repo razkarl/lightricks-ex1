@@ -59,6 +59,6 @@ public class ContactDetailsFragment extends Fragment {
         name.setText(contact.getName());
         email.setText(contact.getEmail());
         number.setText(contact.getNumber());
-        glideSetImage(getContext(), image, contact.getImageName());
+        glideSetImage(getContext(), image, contact.getImagePath());
     }
 }

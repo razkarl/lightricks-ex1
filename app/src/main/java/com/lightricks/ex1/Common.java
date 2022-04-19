@@ -35,6 +35,7 @@ public class Common {
     public static void glideSetImage(Context context, ImageView ivImage, String imageName) {
         int imageId = getImageId(context, imageName);
         if (imageId == 0){
+            // NOT thread safe! Think about a safe way to preform this operation (the default image calculation)...
             // Init defultImageId for the first time
             if (defaultImageId == -1){
                 defaultImageId = getImageId(context, "default_image");
@@ -42,6 +43,7 @@ public class Common {
             // Validate defaultImageId
             if (defaultImageId == 0){
                 // Oh no! "default_image.jpeg" is missing!
+                // Use logging here! notify about it.
                 return;
             }
             imageId = defaultImageId;
